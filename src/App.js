@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import react, { useState } from 'react';
 import './App.css';
+import ComponentA from './components/ComponentA';
+import ComponentC from './components/ComponentC';
 
-function App() {
+export const UserContext = react.createContext();
+
+function App() { 
+  const [bgcolor, setBgcolor] = useState(false);
+  const handleBackground = () => {
+    setBgcolor((prev) => !prev);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{backgroundColor: bgcolor ? 'blue' : 'white'}}>
+      <UserContext.Provider value={{handleBackground , setBgcolor, bgcolor}}>
+        <ComponentC/>
+      </UserContext.Provider>
+      <button onClick={handleBackground}>Change background</button>
     </div>
   );
 }
